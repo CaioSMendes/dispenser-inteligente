@@ -1,0 +1,5 @@
+Role Admin
+     User.create(email: 'admin@admin.com', password: 'Admin123', role: 'admin')
+
+Role User
+    User.create(email: 'user@user.com', password: 'User123', role: 'user')

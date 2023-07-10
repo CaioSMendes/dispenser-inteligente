@@ -1,0 +1,162 @@
+<nav class="navbar">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+    </li>
+  </ul>
+</nav>
+
+Index User
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .content {
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+    <div class="main-content">
+      <div class="header">
+        <h2>Dispenser Automático</h2>
+      </div>
+      <div class="content">
+        <h3>Status: <button type="button" class="btn btn-danger">Offline</button></h3>
+        <h3>Status: <button type="button" class="btn btn-success">Online</button></h3>
+        <h3>Quantidade de dose:</h3>
+
+        <canvas id="dispenserCanvas" width="300" height="500"></canvas>
+      </div>
+    </div>
+ 
+
+  <script>
+    const canvas = document.getElementById('dispenserCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Desenhar o corpo do dispenser
+    ctx.fillStyle = '#ccc';
+    ctx.fillRect(50, 100, 200, 300);
+    
+    // Desenhar a torneira
+    ctx.fillStyle = '#aaa';
+    ctx.fillRect(130, 400, 40, 30);
+    
+    // Desenhar o botão de dispensar
+    ctx.fillStyle = '#aaa';
+    ctx.fillRect(110, 450, 80, 40);
+    
+    // Adicionar texto ao botão
+    ctx.font = '20px Arial';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.fillText('Dispensar', 150, 480);
+  </script>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dispensador de Bebidas</title>
+  <style>
+    #dispenser {
+      width: 200px;
+      height: 300px;
+      background-color: #ccc;
+      position: relative;
+    }
+
+    #liquid {
+      width: 100%;
+      height: 100%;
+      background-color: blue;
+      position: absolute;
+      bottom: 0;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="dispenser">
+    <div id="liquid"></div>
+    <button id="dispenseBtn">Dispensar</button>
+  </div>
+
+  <script>
+    // Inicialização do líquido
+    let liquidLevel = 100; // Valor inicial em porcentagem (100%)
+    const liquidElement = document.getElementById('liquid');
+    updateLiquid();
+
+    // Botão de dispensar
+    const dispenseBtn = document.getElementById('dispenseBtn');
+    dispenseBtn.addEventListener('click', () => {
+      if (liquidLevel > 0) {
+        liquidLevel -= 10; // Reduz 10% a cada interação
+        updateLiquid();
+      }
+    });
+
+    // Função para atualizar o nível do líquido visualmente
+    function updateLiquid() {
+      liquidElement.style.height = liquidLevel + '%';
+    }
+  </script>
+</body>
+</html>
