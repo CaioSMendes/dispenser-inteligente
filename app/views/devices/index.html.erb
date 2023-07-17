@@ -1,0 +1,32 @@
+<h1>Dados da API</h1>
+
+<% if @api_data.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Device</th>
+        <th>Status</th>
+        <th>IP Address</th>
+        <th>Cont</th>
+        <th>Last Seen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @api_data.each do |data| %>
+        <tr>
+          <td><%= data['device'] %></td>
+          <td><%= data['status'] %></td>
+          <td><%= data['ipadrrs'] %></td>
+          <td><%= data['cont'] %></td>
+          <td><%= data['last_seen'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Nenhum dado da API encontrado.</p>
+<% end %>
+
+
+
+<%= link_to 'Salvar Dados', save_data_devices_path, method: :post, class: 'btn btn-primary' %>

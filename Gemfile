@@ -8,6 +8,10 @@ gem 'bootstrap', '~> 5.0'
 gem 'nexmo'
 gem 'httparty'
 gem 'twilio-ruby'
+gem 'font-awesome-rails'
+gem 'will_paginate'
+gem 'kaminari'
+
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

@@ -9,14 +9,30 @@
 
 
 
-user = User.new(email: 'user@user.com', password: 'user123', role: :user)
+user = User.new(email: 'user@user.com', password: 'user123', name: 'User Master', phone: '(95) 2379-7154', role: :user)
 user.save
-puts 'User criado com sucesso!'
+puts 'User Master criado com sucesso!'
+
+user = User.new(email: 'caio@user.com', password: 'user123', name: 'User Big Master', phone: '(49) 2321-8336', role: :user)
+user.save
+puts 'User Big Master criado com sucesso!'
+
+user = User.new(email: 'top@user.com', password: 'user123', name: 'Top User Big Master', phone: '(49) 2321-8336', role: :user)
+user.save
+puts 'User Big Master criado com sucesso!'
 
 
-admin = User.new(email: 'admin@admin.com', password: 'admin123', role: :admin)
+admin = User.new(email: 'admin@admin.com', password: 'admin123', name: 'Admin Big Master', phone: '(49) 2321-8336', role: :admin)
+admin.save
+puts 'Admin Big Master criado com sucesso!'
+
+admin = User.new(email: 'caio@admin.com', password: 'admin123', name: 'Admin Big', phone: '(49) 2321-8336', role: :admin)
 admin.save
 puts 'Admin criado com sucesso!'
+
+admin = User.new(email: 'top@admin.com', password: 'admin123', name: 'Top Admin Big', phone: '(49) 2321-8336', role: :admin)
+admin.save
+puts 'Top Admin criado com sucesso!'
 
 puts user.user?  # true
 puts admin.admin? # true

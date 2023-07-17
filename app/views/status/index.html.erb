@@ -1,0 +1,37 @@
+<h1>Meus dispositivos</h1>
+
+<div class="container">
+  <% if @error_message %>
+    <p><strong>Erro:</strong> <%= @error_message %></p>
+  <% else %>
+    <div class="row">
+      <% @results.each do |result| %>
+        <div class="col-lg-3 col-md-6">
+          <div class="card">
+            <%= image_tag 'dispenser.jpg', class: "card-img-top" , alt: "Produto 1" %>
+            <div class="card-body">
+              <h5 class="card-title"><p><%= result['device'] %></p></h5>
+              <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
+              <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-offline"></span></p>
+              <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
+              <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
+              <p><strong>Online última vez:</strong> <% if result['last_seen'].present? %>
+              <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
+            <% else %>
+              <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
+            <% end %></p>
+              <a href="#" class="btn btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= paginate @results %>
+    </div>  
+  <% end %>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>

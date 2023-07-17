@@ -59,13 +59,15 @@ class SmsController < ApplicationController
   
     def send_sms_twilio
       account_sid = 'ACcbd199f02e7c1e843cd953a16ac1e714'
-      auth_token = '30270abbc399158c4f48018dc6c5061d'
+      auth_token = '3d1102aa17ee4151b2de70dcce93192c'
       client = Twilio::REST::Client.new(account_sid, auth_token)
   
-      from = '5419523545' # Número de telefone fornecido pela Twilio
+      from = '5416128239' # Número de telefone fornecido pela Twilio
       #to = '5561992488131' # Número de telefone do destinatário Luis RFID
-      #to = '5561992233667'
+      #to = '5561998058131'
       to = '5561995762787' # Número de telefone do destinatário Caio
+      #to = '5561993212899' #Caian
+      #to = '5561991150833' #Ivanice
       body = 'Olá! Esta é uma mensagem teste do sistema D.I.U informando que sua cachaca está chegando ao fim! Peça para seu distribuidor uma reposição.' # Corpo da mensagem SMS
   
       message = client.messages.create(
@@ -73,34 +75,41 @@ class SmsController < ApplicationController
         to: to,
         body: body
       )
-  
-      render json: { message: 'SMS sent successfully!' }
-    rescue Twilio::REST::TwilioError => e
-      render json: { error: e.message }, status: :unprocessable_entity
+
+        # Save the log entry
+        sms_log = SmsLog.create(
+            from_number: message.from,
+            to_number: message.to,
+            body: message.body,
+            sent_at: Time.now
+        )
+
+        render json: { message: 'SMS sent successfully!' }
+        rescue Twilio::REST::TwilioError => e
+        render json: { error: e.message }, status: :unprocessable_entity
     end
 
     def send_whatsapp_message_twilio
-      account_sid = 'ACcbd199f02e7c1e843cd953a16ac1e714'
-      auth_token = '30270abbc399158c4f48018dc6c5061d'
-      client = Twilio::REST::Client.new(account_sid, auth_token)
-  
-      from = 'whatsapp:+5419523545' # Número de telefone fornecido pela Twilio
-      #to = '5561992488131' # Número de telefone do destinatário
-      #to = '5561995762787' # Número de telefone do destinatário
-      to = 'whatsapp:+5561995762787' # Número de telefone do destinatário no formato 'whatsapp:+...'
-      body = 'Olá! Esta é uma mensagem teste do sistema D.I.U informando que sua cachaça está chegando ao fim! Peça para seu distribuidor uma reposição.' # Corpo da mensagem SMS
-
-        message = client.messages.create(
-            from: from,
-            to: to,
-            body: body
-        )
-    
+        account_sid = 'ACcbd199f02e7c1e843cd953a16ac1e714'
+        auth_token = '3d1102aa17ee4151b2de70dcce93192c'
+        @client = Twilio::REST::Client.new(account_sid, auth_token)
+        
+        message = @client.messages.create(
+          body: 'Olá! Esta é uma mensagem teste do sistema D.I.U informando que sua cachaça está chegando ao fim! Peça para seu distribuidor uma reposição.',
+          from: 'whatsapp:+14155238886',
+          to: 'whatsapp:+556195762787', # Caio
+          #to: 'whatsapp:+5561992488131' # Luis RFID
+          #to: 'whatsapp:+5561993212899' # Caian
+        )    
         if message.error_code.nil?
           render json: { message: 'Mensagem enviada com sucesso!' }
         else
           render json: { error: 'Erro ao enviar a mensagem.' }, status: :unprocessable_entity
         end
+      end
+
+      def index
+        @sms_logs = SmsLog.all
       end
   end
   
