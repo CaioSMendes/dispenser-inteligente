@@ -5,12 +5,14 @@ class DevicesController < ApplicationController
     before_action :check_admin, only: [:assign_device]
     
     def index
-        response = HTTParty.get('https://dispenser-smart-api-a2db2b28d087.herokuapp.com/esp8266s')
+        response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
         @api_data = JSON.parse(response.body)
-    end
+        @users = User.all
+        @devices = Device.includes(:user)
+      end
 
     def save_data
-      response = HTTParty.get('https://dispenser-smart-api-a2db2b28d087.herokuapp.com/esp8266s')
+      response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
       devices = JSON.parse(response.body)
   
       devices.each do |data|
@@ -37,11 +39,68 @@ class DevicesController < ApplicationController
         end
     end
 
+    def create
+      # Obtenha os parâmetros do formulário
+      device_id = params[:device]
+      user_id = params[:user]
+  
+      # Encontre o dispositivo e o usuário com base nos IDs
+      device = Device.find(device_id)
+      user = User.find(user_id)
+  
+      # Associe o dispositivo ao usuário
+      device.user = user
+  
+      if device.save
+        redirect_to device_path(device), notice: "Dispositivo associado com sucesso!"
+      else
+        flash[:error] = "Ocorreu um erro ao salvar as alterações do dispositivo."
+        render :new
+      end
+    end
+
+    def associar_dispositivo_usuario
+      response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
+      if response.code == 200
+        @devices = JSON.parse(response.body)
+      else
+        @devices = []
+      end
+  
+      @users = User.all
+  
+      if request.post?
+        # Obtenha os parâmetros do formulário
+        device_id = params[:device]
+        user_id = params[:user]
+  
+        # Encontre o dispositivo e o usuário com base nos IDs
+        device = @devices.find { |d| d['id'] == device_id.to_i }
+        user = User.find(user_id)
+  
+        # Associe o dispositivo ao usuário
+        device['user_id'] = user_id
+        
+        # Salve as alterações no dispositivo
+        # Você precisa definir a lógica para salvar as alterações no dispositivo
+  
+        # Redirecione ou renderize a página conforme necessário
+        # Salve as alterações no dispositivo
+        if device.save
+          flash[:success] = "Dispositivo associado com sucesso!"
+          redirect_to seu_path(device['id'])
+          redirect_to device_path(device), notice: "Dispositivo associado com sucesso!"
+        else
+          flash[:error] = "Ocorreu um erro ao salvar as alterações do dispositivo."
+          render :associar_dispositivo_usuario
+        end
+      end
+    end
+
+
     def show
-        # Lógica para exibir um dispositivo específico
-        redirect_to devices_path
-        #@device = Device.find(params[:id])
-        #redirect_to devices_path
+        @device = Device.find(params[:id])
+        @devices = @user.devices if @user.present? && @user.devices.present?
     end
 
     private

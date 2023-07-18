@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root 'home#index'
   get '/status', to: 'status#index'
   resources :devicelogs, only: [:index]
+  get 'associar_dispositivo_usuario', to: 'devices#associar_dispositivo_usuario'
+
 
 
   resources :devices do
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
   end
   
   post 'devices/fetch_and_save_data', to: 'devices#fetch_and_save_data', as: 'fetch_and_save_data_devices'
-  resources :devices, only: [:show, :index]
+  resources :devices, only: [:new, :create, :show]
   
 
   devise_for :users

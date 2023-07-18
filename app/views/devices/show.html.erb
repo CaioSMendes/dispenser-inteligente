@@ -1,16 +1,7 @@
-<% if current_user.admin? %>
-  <% if @device.user.present? %>
-    <p>Dispositivo atribuído ao usuário: <%= @device.user.name %></p>
-  <% else %>
-    <p>Dispositivo não atribuído a nenhum usuário.</p>
-    <%= form_with(model: @device, url: assign_device_device_path(@device), method: :post) do |f| %>
-      <%= f.label :user_id, 'Selecione um usuário:' %>
-      <%= f.collection_select :user_id, User.all, :id, :name, prompt: 'Selecione um usuário' %>
-      
-      <%= f.label :device_id, 'Selecione um dispositivo:' %>
-      <%= f.collection_select :device_id, Device.all, :id, :device_name, prompt: 'Selecione um dispositivo' %>
-      
-      <%= f.submit 'Atribuir Dispositivo' %>
-    <% end %>
-  <% end %>
-<% end %>
+<h1>Detalhes do Dispositivo</h1>
+
+    <p>O dispositivo <%= @device.device %> pertence ao usuário <%= @device.user.name %></p>
+    <!-- Substitua 'device' pelo atributo correto que representa o nome do dispositivo e 'user' pelo atributo correto que representa o usuário no seu modelo Device -->
+    
+    <%= link_to 'Voltar', devices_path %>
+    

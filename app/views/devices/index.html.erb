@@ -30,3 +30,40 @@
 
 
 <%= link_to 'Salvar Dados', save_data_devices_path, method: :post, class: 'btn btn-primary' %>
+
+<h1>Associar Dispositivo a Usuário</h1>
+
+<%= form_tag do %>
+  <div>
+    <label for="device">Dispositivo:</label>
+    <select name="device" id="device">
+      <% @api_data.each do |device| %>
+        <option value="<%= device['id'] %>"><%= device['device'] %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div>
+    <label for="user">Usuário:</label>
+    <select name="user" id="user">
+      <% @users.each do |user| %>
+        <option value="<%= user.id %>"><%= user.email %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <%= submit_tag "Associar" %>
+<% end %>
+
+
+<h1>Meus dispositivos</h1>
+
+<% @devices.each do |device| %>
+  <% if device.user.present? %>
+    <div>
+      <h3><%= device.device %></h3>
+      <p>Usuário: <%= device.user.name %></p>
+      <!-- Adicione outras informações relevantes sobre o dispositivo e o usuário -->
+    </div>
+  <% end %>
+<% end %>

@@ -3,7 +3,7 @@ require 'json'
 
 class StatusController < ApplicationController
     def index
-        uri = URI('https://dispenser-smart-api-a2db2b28d087.herokuapp.com/esp8266s')
+        uri = URI('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
     
         begin
           response = Net::HTTP.get(uri)
