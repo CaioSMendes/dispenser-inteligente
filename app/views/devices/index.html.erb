@@ -64,32 +64,49 @@
 </table>
   
 
-<h1>Dispositivos</h1>
+<h1>Dados da API</h1>
 
-<% if @api_data.present? %>
-  <% @api_data.each do |data| %>
-    <div>
-      <h3><%= data['device'] %></h3>
-      <p>Status: <%= data['status'] %></p>
-      <p>IP Address: <%= data['ipadrrs'] %></p>
-      <p>Cont: <%= data['cont'] %></p>
-      <p>Last Seen: <%= data['last_seen'] %></p>
-      <% if Device.exists?(device: data['device']) %>
-        <% device = Device.find_by(device: data['device']) %>
-        <% if device.user.present? %>
-            <p>Usuário: <%= device.user.name %></p>
-        <%else%>
-            <p>Nenhum usuário associado</p>
-        <%end%>
-        <%= form_tag associate_device_path, method: :post do %>
-          <%= select_tag "user_device_#{data['device']}", options_from_collection_for_select(@users, :id, :name), prompt: 'Selecione um usuário' %>
-          <%= hidden_field_tag :device, data['device'] %>
-          <%= submit_tag 'Associar', class: 'btn btn-primary' %>
+<%= form_tag associate_device_path, method: :post do %>
+  <% if @api_data.present? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Device</th>
+          <th>Status</th>
+          <th>IP Address</th>
+          <th>Cont</th>
+          <th>Last Seen</th>
+          <th>Existente</th>
+          <th>Associar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @api_data.each do |data| %>
+          <tr>
+            <td><%= data['device'] %></td>
+            <td><%= data['status'] %></td>
+            <td><%= data['ipadrrs'] %></td>
+            <td><%= data['cont'] %></td>
+            <td><%= data['last_seen'] %></td>
+            <td>
+              <% if Device.exists?(device: data['device']) %>
+                <i class="fa fa-check"></i>
+              <% else %>
+                <i class="fa fa-times"></i>
+              <% end %>
+            </td>
+            <td>
+              <%= form_tag associate_device_path, method: :post do %>
+                <%= select_tag "user_device_#{data['device']}", options_from_collection_for_select(@users, :id, :name), prompt: 'Selecione um usuário' %>
+                <%= hidden_field_tag :device, data['device'] %>
+                <%= submit_tag 'Associar Usuário', class: 'btn btn-primary' %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
-      <% end %>
-    </div>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Nenhum dado da API encontrado.</p>
   <% end %>
-<% else %>
-  <p>Nenhum dado da API encontrado.</p>
 <% end %>
-

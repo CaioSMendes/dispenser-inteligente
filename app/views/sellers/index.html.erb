@@ -12,3 +12,61 @@
 </div>
 
 <%= link_to "Novo vendedor", new_seller_path, class: "btn btn-primary" %>
+
+
+<h1>Meus dispositivos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Dispositivo</th>
+      <th>Usuário</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= device.device %></td>
+        <td><%= device.user&.name %></td>
+        <td>
+          <%= link_to 'Ver', device_path(device), class: 'btn btn-primary btn-sm' %>
+          <%= button_to 'Desassociar', dissociate_device_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Meus vendedores</h1>
+
+<%= link_to 'Novo Vendedor', new_seller_path, class: 'btn btn-primary' %>
+
+<h1>Dispositivos</h1>
+
+<% if @devices.present? %>
+  <% @devices.each do |device| %>
+    <div>
+      <h3><%= device.device %></h3>
+      <p>Status: <%= device.status %></p>
+      <!-- Adicione outras informações relevantes sobre o dispositivo -->
+      <% if device.seller.present? %>
+        <p>Usuário: <%= device.seller.nome %></p>
+      <% else %>
+        <p>Nenhum vendedor associado</p>
+      <% end %>
+
+      <% if @sellers.present? %>
+        <%= form_tag associate_device_path, method: :post do %>
+          <%= select_tag "seller_id", options_from_collection_for_select(@sellers, :id, :nome), prompt: 'Selecione um vendedor' %>
+          <%= hidden_field_tag :device_id, device.id %>
+          <%= submit_tag 'Associar Vendedor', class: 'btn btn-primary' %>
+        <% end %>
+      <% else %>
+        <p>Nenhum vendedor disponível</p>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p>Nenhum dado da API encontrado.</p>
+<% end %>

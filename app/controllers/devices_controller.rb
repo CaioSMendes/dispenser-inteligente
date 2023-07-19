@@ -13,36 +13,25 @@ class DevicesController < ApplicationController
         end
       @users = User.all
       @devices = Device.includes(:user)
-    end
-
-    def save_data
-      response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
-      devices = JSON.parse(response.body)
-  
-      devices.each do |data|
-        Device.create(
-          device: data['device'],
-          status: data['status'],
-          ipadrrs: data['ipadrrs'],
-          cont: data['cont'],
-          last_seen: data['last_seen']
-        )
-      end
-  
-      redirect_to devices_path, notice: 'Dados da API salvos no banco de dados.'
-    end
-    
+    end    
    
     def associate
-      device = params[:device]
-      user_id = params["user_device_#{device}"]
-    
-      device_record = Device.find_or_create_by(device: device)
-      device_record.user_id = user_id
-      device_record.save
-    
-      redirect_to devices_path, notice: 'Dispositivo associado com sucesso!'
+      selected_device = params[:device]
+      user_id = params["user_device_#{selected_device}"]
+      
+      # Encontra o dispositivo existente ou cria um novo
+      @device = Device.find_or_create_by(device: selected_device)
+      
+      # Define o atributo user_id para associar o dispositivo ao usuário
+      @device.user_id = user_id
+      
+      if @device.save
+        redirect_to devices_path, notice: 'Dispositivo associado com sucesso!'
+      else
+        redirect_to devices_path, alert: 'Erro ao associar dispositivo ao usuário.'
+      end
     end
+    
     
     def dissociate
       device = Device.find(params[:id])

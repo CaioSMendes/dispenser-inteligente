@@ -4,6 +4,7 @@ class SellersController < ApplicationController
   # GET /sellers or /sellers.json
   def index
     @sellers = Seller.all
+    @devices = Device.includes(:seller)
   end
 
   # GET /sellers/1 or /sellers/1.json
@@ -54,6 +55,17 @@ class SellersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to sellers_url, notice: "Seller was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def associate_device
+    @seller = Seller.find(params[:seller_id])
+    @device = Device.find(params[:device_id])
+
+    if @device.sellers << @seller
+      redirect_to devices_path, notice: 'Vendedor associado com sucesso!'
+    else
+      redirect_to devices_path, alert: 'Erro ao associar vendedor ao dispositivo.'
     end
   end
 

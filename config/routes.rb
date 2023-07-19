@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get '/user_management', to: 'user_management#index', as: 'user_management'
-  resources :sellers
+  resources :sellers do
+      post 'associate_device', on: :collection
+  end
+
+
   get 'home/index'
   get 'esp8266/index'
   root 'home#index'

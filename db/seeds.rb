@@ -39,3 +39,44 @@ puts admin.admin? # true
 
 puts 'Usuários criados com sucesso!'
 
+
+Seller.create(
+  status: "Ativo",
+  nome: "João",
+  cardRFID: "ABCD1234",
+  cargo: "Vendedor",
+  contador: 0
+)
+
+Seller.create(
+  status: "Ativo",
+  nome: "Pedro",
+  cardRFID: "ASDF6553",
+  cargo: "Vendedor",
+  contador: 0
+)
+
+Seller.create(
+  status: "Ativo",
+  nome: "HUGO",
+  cardRFID: "TRHDV592",
+  cargo: "Vendedor",
+  contador: 0
+)
+
+Seller.create(
+  status: "Ativo",
+  nome: "Juca",
+  cardRFID: "BFRH8953",
+  cargo: "Vendedor",
+  contador: 0
+)
+
+Seller.create(
+  status: "Ativo",
+  nome: "Igor",
+  cardRFID: "VDHFLO5439",
+  cargo: "Vendedor",
+  contador: 0
+)
+
