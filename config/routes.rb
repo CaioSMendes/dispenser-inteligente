@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/status', to: 'status#index'
   resources :devicelogs, only: [:index]
   get 'associar_dispositivo_usuario', to: 'devices#associar_dispositivo_usuario'
-
+  delete 'devices/:id/dissociate', to: 'devices#dissociate', as: 'dissociate_device'
 
 
   resources :devices do

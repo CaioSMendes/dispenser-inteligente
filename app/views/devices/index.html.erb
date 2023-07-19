@@ -55,14 +55,14 @@
           <!-- Adicione outras colunas com informações relevantes sobre o dispositivo e o usuário -->
           <td>
             <%= link_to 'Ver', device_path(device), class: 'btn btn-primary btn-sm' %>
-            <%= link_to 'Excluir', device_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este dispositivo?' }, class: 'btn btn-danger btn-sm' %>
+            <%= button_to 'Desassociar', dissociate_device_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: 'btn btn-danger btn-sm' %>
           </td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
-
+  
 
 <h1>Dispositivos</h1>
 
@@ -74,11 +74,13 @@
       <p>IP Address: <%= data['ipadrrs'] %></p>
       <p>Cont: <%= data['cont'] %></p>
       <p>Last Seen: <%= data['last_seen'] %></p>
-
       <% if Device.exists?(device: data['device']) %>
         <% device = Device.find_by(device: data['device']) %>
-        <p>Usuário: <%= device.user.name %></p>
-      <% else %>
+        <% if device.user.present? %>
+            <p>Usuário: <%= device.user.name %></p>
+        <%else%>
+            <p>Nenhum usuário associado</p>
+        <%end%>
         <%= form_tag associate_device_path, method: :post do %>
           <%= select_tag "user_device_#{data['device']}", options_from_collection_for_select(@users, :id, :name), prompt: 'Selecione um usuário' %>
           <%= hidden_field_tag :device, data['device'] %>

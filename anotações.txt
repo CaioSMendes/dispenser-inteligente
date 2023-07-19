@@ -19,3 +19,8 @@ rails generate model Device device:string status:string ipadrrs:string cont:inte
 
 "id": 1,
 "device","status","ipadrrs","cont","last_seen"
+
+
+http://localhost:3000/devices
+Colocar esse link pra mostrar pro admin
+todos os devices atrelado ao usuário
