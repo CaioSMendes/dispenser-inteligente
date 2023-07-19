@@ -5,11 +5,16 @@ class DevicesController < ApplicationController
     before_action :check_admin, only: [:assign_device]
     
     def index
-        response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
-        @api_data = JSON.parse(response.body)
-        @users = User.all
-        @devices = Device.includes(:user)
-      end
+      response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
+        if response.code == 200
+          @api_data = JSON.parse(response.body)
+        else
+          @api_data = []
+        end
+      @users = User.all
+      @users = User.all
+      @devices = Device.includes(:user)
+    end
 
     def save_data
       response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
@@ -43,22 +48,27 @@ class DevicesController < ApplicationController
       # Obtenha os parâmetros do formulário
       device_id = params[:device]
       user_id = params[:user]
-  
+    
       # Encontre o dispositivo e o usuário com base nos IDs
-      device = Device.find(device_id)
-      user = User.find(user_id)
-  
-      # Associe o dispositivo ao usuário
-      device.user = user
-  
-      if device.save
-        redirect_to device_path(device), notice: "Dispositivo associado com sucesso!"
+      device = Device.find_by(id: device_id)
+      user = User.find_by(id: user_id)
+    
+      if device && user
+        # Associe o dispositivo ao usuário
+        device.user = user
+    
+        if device.save
+          redirect_to device_path(device), notice: "Dispositivo associado com sucesso!"
+        else
+          flash[:error] = "Ocorreu um erro ao salvar as alterações do dispositivo."
+          #render :new
+        end
       else
-        flash[:error] = "Ocorreu um erro ao salvar as alterações do dispositivo."
-        render :new
+        flash[:error] = "Dispositivo ou usuário não encontrado."
+        #render :new
       end
     end
-
+    
     def associar_dispositivo_usuario
       response = HTTParty.get('https://dispenser-smart-api-fd9dea90550b.herokuapp.com/esp8266s')
       if response.code == 200
@@ -97,6 +107,16 @@ class DevicesController < ApplicationController
       end
     end
 
+    def associate
+      device = params[:device]
+      user_id = params["user_device_#{device}"]
+    
+      device_record = Device.find_or_create_by(device: device)
+      device_record.user_id = user_id
+      device_record.save
+    
+      redirect_to devices_path, notice: 'Dispositivo associado com sucesso!'
+    end    
 
     def show
         @device = Device.find(params[:id])

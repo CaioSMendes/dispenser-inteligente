@@ -16,9 +16,10 @@ Rails.application.routes.draw do
     post 'save_data', on: :collection
     post 'devices/fetch_and_save_data', to: 'devices#fetch_and_save_data', as: 'fetch_and_save_data_devices'
   end
-  
+
+  post 'devices/associate', to: 'devices#associate', as: 'associate_device'
   post 'devices/fetch_and_save_data', to: 'devices#fetch_and_save_data', as: 'fetch_and_save_data_devices'
-  resources :devices, only: [:new, :create, :show]
+  resources :devices, only: [:new, :create, :show, :destroy]
   
 
   devise_for :users
