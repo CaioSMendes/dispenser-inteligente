@@ -1,0 +1,112 @@
+<h1>Dados da API</h1>
+
+<% if @api_data.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Device</th>
+        <th>Status</th>
+        <th>IP Address</th>
+        <th>Cont</th>
+        <th>Last Seen</th>
+        <th>Existente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @api_data.each do |data| %>
+        <tr>
+          <td><%= data['device'] %></td>
+          <td><%= data['status'] %></td>
+          <td><%= data['ipadrrs'] %></td>
+          <td><%= data['cont'] %></td>
+          <td><%= data['last_seen'] %></td>
+          <td>
+          <% if Device.exists?(device: data['device']) %>
+            <i class="fa fa-check"></i>
+            <% else %>
+              <i class="fa fa-times"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Nenhum dado da API encontrado.</p>
+<% end %>
+  
+
+<h1>Meus dispositivos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Dispositivo</th>
+      <th>Usuário</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @devices.each do |device| %>
+      <% if device.user.present? %>
+        <tr>
+          <td><%= device.device %></td>
+          <td><%= device.user.name %></td>
+          <!-- Adicione outras colunas com informações relevantes sobre o dispositivo e o usuário -->
+          <td>
+            <%= link_to 'Ver', device_path(device), class: 'btn btn-primary btn-sm' %>
+            <%= button_to 'Desassociar', dissociate_device_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+  
+
+<h1>Dados da API</h1>
+
+<%= form_tag associate_device_path, method: :post do %>
+  <% if @api_data.present? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Device</th>
+          <th>Status</th>
+          <th>IP Address</th>
+          <th>Cont</th>
+          <th>Last Seen</th>
+          <th>Existente</th>
+          <th>Associar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @api_data.each do |data| %>
+          <tr>
+            <td><%= data['device'] %></td>
+            <td><%= data['status'] %></td>
+            <td><%= data['ipadrrs'] %></td>
+            <td><%= data['cont'] %></td>
+            <td><%= data['last_seen'] %></td>
+            <td>
+              <% if Device.exists?(device: data['device']) %>
+                <i class="fa fa-check"></i>
+              <% else %>
+                <i class="fa fa-times"></i>
+              <% end %>
+            </td>
+            <td>
+              <%= form_tag associate_device_path, method: :post do %>
+                <%= select_tag "user_device_#{data['device']}", options_from_collection_for_select(@users, :id, :name), prompt: 'Selecione um usuário' %>
+                <%= hidden_field_tag :device, data['device'] %>
+                <%= submit_tag 'Associar Usuário', class: 'btn btn-primary' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Nenhum dado da API encontrado.</p>
+  <% end %>
+<% end %>

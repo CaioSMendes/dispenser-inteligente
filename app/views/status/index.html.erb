@@ -1,0 +1,33 @@
+<div class="container">
+  <% if @error_message %>
+    <p><strong>Erro:</strong> <%= @error_message %></p>
+  <% else %>
+    <div class="row">
+      <% @results.each do |result| %>
+        <div class="col-lg-3 col-md-6">
+          <div class="card">
+            <%= image_tag 'dispenser.jpg', class: "card-img-top" , alt: "Produto 1" %>
+            <div class="card-body">
+              <h5 class="card-title"><p><%= result['device'] %></p></h5>
+              <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
+              <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
+              <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
+              <% if result['last_seen'].present? %>
+              <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
+            <% else %>
+              <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
+            <% end %></p>
+              <div class="text-center">
+                <button class="fa fa-lock btn btn-danger" type="button"></button>
+                <button class="fa fa-unlock btn btn-success" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <%= paginate @results %>
+    </div>  
+  <% end %>
+</div>

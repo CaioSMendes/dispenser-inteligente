@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+<style>
+  .enlarge-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Ajuste a altura máxima da imagem conforme necessário */
+  }
+</style>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Painel do usuário</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Usuários</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Opção 1</a>
+            <%= link_to 'Editar', edit_user_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+          </div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /Navbar -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+        <div class="sidebar">
+          <ul class="list-group">
+            <li class="list-group-item active">Dashboard</li>
+            <li class="list-group-item">Produtos</li>
+            <li class="list-group-item">Pedidos</li>
+            <li class="list-group-item">Usuários</li>
+          </ul>
+        </div>
+      </div>
+      <!-- /Sidebar -->
+      <!-- Conteúdo principal -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Bem-vindo ao Painel do Usuário</h1>
+
+          <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="main-content">
+                <div class="header">
+                  <h2>Dispenser Automático</h2>
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= image_tag "dispenser.jpg", alt: "Imagem do Dispenser", class: "img-fluid" %>
+                    </div>
+                    <div class="col-md-6">
+                      <p>Nome Device:</p>
+                      <p>Status: <button class="fa fa-lock btn btn-danger" type="button"></button></p>
+                      <p>Status: <button class="fa fa-unlock btn btn-success" type="button"></button></p>
+                      <p>Status: Online <span class="status-dot status-online"></span></p>
+                      <p>Status: Offline <span class="status-dot status-offline"></span></p>
+                      <p>IP Device:</p>
+                      <p>Quantidade de dose:</p>
+                      <p>Online última vez:</p> 
+                      <p>Atendentes:</p> 
+                      <canvas id="dispenserCanvas" width="300" height="500"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+
+
+
+        </div>
+      </div>
+      <!-- /Conteúdo principal -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2023 Seu Painel do Usuário
+    </div>
+  </footer>
+  <!-- /Footer -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>

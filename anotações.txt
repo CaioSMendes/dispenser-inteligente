@@ -1,0 +1,26 @@
+Role Admin
+     User.create(email: 'admin@admin.com', password: 'Admin123', role: 'admin')
+
+Role User
+    User.create(email: 'user@user.com', password: 'User123', role: 'user')
+
+
+
+    rails generate migration CreateDevices device:string status:string ipadrrs:string cont:integer last_seen:datetime
+rails generate model Device device:string status:string ipadrrs:string cont:integer last_seen:datetime user:references
+
+
+    
+        "": "Caio device 005",
+        "status": "online",
+        "": "123.456.678",
+        "": 2,
+        "last_seen": "2023-07-13T09:26:26.822Z",
+
+"id": 1,
+"device","status","ipadrrs","cont","last_seen"
+
+
+http://localhost:3000/devices
+Colocar esse link pra mostrar pro admin
+todos os devices atrelado ao usuário
