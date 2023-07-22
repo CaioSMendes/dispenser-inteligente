@@ -4,7 +4,6 @@ Rails.application.routes.draw do
       post 'associate_device', on: :collection
   end
 
-
   get 'home/index'
   get 'esp8266/index'
   root 'home#index'
@@ -12,6 +11,9 @@ Rails.application.routes.draw do
   resources :devicelogs, only: [:index]
   get 'associar_dispositivo_usuario', to: 'devices#associar_dispositivo_usuario'
   delete 'devices/:id/dissociate', to: 'devices#dissociate', as: 'dissociate_device'
+  get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
+  resources :api_manager
+  
 
 
   resources :devices do
@@ -26,14 +28,15 @@ Rails.application.routes.draw do
   resources :devices, only: [:new, :create, :show, :destroy]
   
 
-  devise_for :users
+
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :admin, only: [:destroy]
   resources :users, only: [:index, :show, :destroy]
     devise_scope :user do
       get '/users/sign_out' => 'devise/sessions#destroy'
+      #delete '/users/cancel', to: 'users/registrations#destroy', as: :cancel_user_registration
     end
 
-  resources :sms, only: [:index]
 
   # Rotas para o Admin
   get 'admin/index', as: 'admin_index'
@@ -42,12 +45,13 @@ Rails.application.routes.draw do
   get 'user/index', as: 'user_index'
 
   # Rotas para o Envio de SMS
-  post '/send_sms', to: 'sms#send_sms'
-  post '/send_sms_twilio', to: 'sms#send_sms_twilio'
+  
 
-  # Rotas para o Envio de Whatsapp
-  post '/send_whatsapp_message', to: 'sms#send_whatsapp_message'
-  post '/send_whatsapp_message_twilio', to: 'sms#send_whatsapp_message_twilio'
+  resources :sms_messages 
+    post '/send_sms_twilio', to: 'sms_messages#send_sms_twilio'
+    # Rotas para o Envio de Whatsapp
+    post '/send_whatsapp_message_twilio', to: 'sms_messages#send_whatsapp_message_twilio'
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

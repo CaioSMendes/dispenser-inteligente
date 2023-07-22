@@ -6,6 +6,7 @@ class CreateDevices < ActiveRecord::Migration[7.0]
       t.string :ipadrrs
       t.integer :cont
       t.datetime :last_seen
+      t.string :padlock
 
       t.timestamps
     end

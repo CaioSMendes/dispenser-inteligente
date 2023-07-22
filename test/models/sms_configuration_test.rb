@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SmsControllerTest < ActionDispatch::IntegrationTest
+class SmsConfigurationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

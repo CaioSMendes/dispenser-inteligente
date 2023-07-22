@@ -1,7 +1,9 @@
 class UserController < ApplicationController
+
     def index
-        # Adicione o código necessário para a página user/index aqui
+        @devices = current_user.devices
     end
+
   
     def show
         @user = User.find(params[:id])

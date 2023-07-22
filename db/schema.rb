@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_17_023530) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_231302) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_17_023530) do
     t.string "ipadrrs"
     t.integer "cont"
     t.datetime "last_seen"
+    t.string "padlock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -30,7 +31,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_17_023530) do
     t.string "nome"
     t.string "cardRFID"
     t.string "cargo"
+    t.string "email"
     t.integer "contador"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sms_configurations", force: :cascade do |t|
+    t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,6 +48,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_17_023530) do
     t.string "to_number"
     t.text "body"
     t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sms_messages", force: :cascade do |t|
+    t.string "smsbody"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sms_templates", force: :cascade do |t|
+    t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

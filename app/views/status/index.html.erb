@@ -1,33 +1,95 @@
-<div class="container">
-  <% if @error_message %>
-    <p><strong>Erro:</strong> <%= @error_message %></p>
-  <% else %>
-    <div class="row">
-      <% @results.each do |result| %>
-        <div class="col-lg-3 col-md-6">
-          <div class="card">
-            <%= image_tag 'dispenser.jpg', class: "card-img-top" , alt: "Produto 1" %>
-            <div class="card-body">
-              <h5 class="card-title"><p><%= result['device'] %></p></h5>
-              <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
-              <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
-              <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
-              <% if result['last_seen'].present? %>
-              <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
-            <% else %>
-              <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
-            <% end %></p>
-              <div class="text-center">
-                <button class="fa fa-lock btn btn-danger" type="button"></button>
-                <button class="fa fa-unlock btn btn-success" type="button"></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to 'Painel Administrativo', admin_index_path, class: 'navbar-brand' %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Opções <i class="fa fa-gear"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#"><%= current_user.name %></a>
+            <%= link_to 'Editar', edit_user_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+          </div> 
+        </li>
+      </ul>
     </div>
-    <div class="text-center">
-      <%= paginate @results %>
-    </div>  
-  <% end %>
+  </nav>
+  <!-- /Navbar -->
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+            <div class="sidebar bg-dark">
+                <ul class="list-group">
+                    <li class="list-group-item active">Dashboard</li>
+                    <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                    <li class="list-group-item"><%= link_to 'Gestão de Usuários', user_management_path %></li>
+                    <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
+                    <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+                    <li class="list-group-item"><%= link_to 'Status dos Dispositivos', status_path %></li>
+                    <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+                </ul>
+            </div>
+      </div>
+      <!-- /Sidebar -->
+
+      <!-- começa Aqui o Conteudo da Page -->
+      <div class="col-lg-9">
+        <h1 class="mt-4">Todos Dispositivos</h1>
+
+        <% if @error_message %>
+        <p><strong>Erro:</strong> <%= @error_message %></p>
+        <% else %>
+          <!-- Conteúdo da lista de dispositivos aqui -->
+          <div class="row">
+            <% @results.each do |result| %>
+              <div class="col-lg-3 col-md-6">
+                <div class="card">
+                  <%= image_tag 'dispenser.jpg', class: "card-img-top" , alt: "Produto 1" %>
+                  <div class="card-body">
+                    <h5 class="card-title"><p><%= result['device'] %></p></h5>
+                    <p><strong>Status:</strong> <%= result['status'] %> <span class="status-dot status-online"></span></p>
+                    <p><strong>IP Device:</strong> <%= result['ipadrrs'] %></p>
+                    <p><strong>Quantidade de doses:</strong> <%= result['cont'] %></p>
+                    <% if result['last_seen'].present? %>
+                      <p><strong>Online última vez:</strong> <%= DateTime.parse(result['last_seen']).strftime('%d/%m/%Y - %H:%M:%S') %></p>
+                    <% else %>
+                      <p><strong>Online última vez:</strong> Data e hora indisponíveis</p>
+                    <% end %>
+                    <div class="text-center">
+                      <% if result["padlock"] == "unlock" %>
+                        <button class="fa fa-unlock btn btn-success" type="button"></button>
+                      <% else %>
+                        <button class="fa fa-lock btn btn-danger" type="button"></button>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          </br>
+          </br>
+          <div class="text-center">
+            <%= paginate @results,theme: 'bootstrap-5',pagination_class: "pagination-sm flex-wrap justify-content-center",nav_class: "d-inline-block"%>
+          </div>  
+        <% end %>
+      </div>      
+    </div>
 </div>
+<%= render partial: 'layouts/footer-admin' %>
+

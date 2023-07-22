@@ -5,6 +5,7 @@ class CreateSellers < ActiveRecord::Migration[7.0]
       t.string :nome
       t.string :cardRFID
       t.string :cargo
+      t.string :email
       t.integer :contador
 
       t.timestamps
