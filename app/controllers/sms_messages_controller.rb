@@ -53,6 +53,10 @@ class SmsMessagesController < ApplicationController
     end
   end
 
+  def logs_message
+    @sms_logs = SmsLog.all
+  end
+
   # DELETE /sms_messages/1 or /sms_messages/1.json
   def destroy
     @sms_message.destroy
@@ -64,17 +68,18 @@ class SmsMessagesController < ApplicationController
 
   def send_sms_twilio
     account_sid = 'ACcbd199f02e7c1e843cd953a16ac1e714'
-    auth_token = '3d1102aa17ee4151b2de70dcce93192c'
+    auth_token = '81ad8e628f8487a68a5d3b2131e149f9'
     client = Twilio::REST::Client.new(account_sid, auth_token)
 
     phone_numbers = fetch_phone_numbers_from_api
     if params[:cont].to_i == 80 && phone_numbers.any?
       phone_number = phone_numbers.first['phone']
       send_sms_to_phone(client, phone_number)
-
-      render json: { message: 'SMS enviado automaticamente!' }
+      #redirect_to sms_messages_path, notice: "SMS enviado automaticamente!"
+      return
     else
       render json: { message: 'SMS nao enviado automaticamente.' }
+      return
     end
   end
 
@@ -104,8 +109,11 @@ class SmsMessagesController < ApplicationController
     end
 
     def send_sms_to_phone(client, phone_number)
-      from = '5416128239' # Número de telefone fornecido pela Twilio
-      body = @last_sms_message.smsbody # Corpo da mensagem SMS
+      from = '15416128239' # Número de telefone fornecido pela Twilio
+      puts "Conteúdo de @last_sms_message: #{@last_sms_message}"
+      #body = @last_sms_message.smsbody # Corpo da mensagem SMS
+      body = "TESTE" # Corpo da mensagem SMS
+
       
       #to = '5561992488131' # Número de telefone do destinatário Luis RFID
       #to = '5561998058131'

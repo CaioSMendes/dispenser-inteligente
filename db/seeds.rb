@@ -45,7 +45,8 @@ Seller.create(
   nome: "João",
   cardRFID: "ABCD1234",
   cargo: "Vendedor",
-  contador: 0
+  contador: 0,
+  email: "João@João.com"
 )
 
 Seller.create(
@@ -53,7 +54,8 @@ Seller.create(
   nome: "Pedro",
   cardRFID: "ASDF6553",
   cargo: "Vendedor",
-  contador: 0
+  contador: 0,
+  email: "Pedro@Pedro.com"
 )
 
 Seller.create(
@@ -61,7 +63,8 @@ Seller.create(
   nome: "HUGO",
   cardRFID: "TRHDV592",
   cargo: "Vendedor",
-  contador: 0
+  contador: 0,
+  email: "HUGO@HUGO.com"
 )
 
 Seller.create(
@@ -69,7 +72,9 @@ Seller.create(
   nome: "Juca",
   cardRFID: "BFRH8953",
   cargo: "Vendedor",
-  contador: 0
+  contador: 0,
+  email: "Juca@Juca.com"
+
 )
 
 Seller.create(
@@ -77,6 +82,7 @@ Seller.create(
   nome: "Igor",
   cardRFID: "VDHFLO5439",
   cargo: "Vendedor",
-  contador: 0
+  contador: 0,
+  email: "Igor@Igor.com"
 )
 

@@ -48,52 +48,41 @@
     </div>
     <!-- /Sidebar -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Gerenciamento de Vendedores</h1>
-        <%if current_user.admin? %>
-        <%else%>
-          <%= link_to "Novo vendedor", new_seller_path, class: "btn btn-success" %>
-        <%end%>
+        <h1 class="mt-4">Gerenciamento de Usuários</h1>
         <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-8">
-
             <table class="table">
               <thead>
                 <tr>
-                  <th>Status</th>
                   <th>Nome</th>
-                  <th>Cartão RFID</th>
-                  <th>Cargo</th>
-                  <th>Doses</th>
                   <th>Email</th>
-                  <th>Ver</th>
+                  <th> </th>
                   <th>Editar</th>
                   <th>Excluir</th>
                 </tr>
               </thead>
               <tbody>
-                <% @sellers.each do |seller| %>
+              <% @users.each do |user| %>
                   <tr>
-                    <td><%= seller.status %></td> 
-                    <td><%= seller.nome %></td>
-                    <td><%= seller.cardRFID %></td>
-                    <td><button type="button" class="btn btn-info"><%= seller.cargo %></button></td>
-                    <td><%= seller.contador %></td>
-                    <td><%= seller.email %></td>
-                    <td> 
-                        <%= button_to seller_path(seller), method: :get, class: 'btn btn-primary' do %>
-                        <i class="fa f fa-search"></i>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td>
+                        <% if user.role == 'admin' %>
+                            <button type="button" class="btn btn-success">Administrador</button>
+                        <% else %>
+                            <button type="button" class="btn btn-primary">Usuário</button>
                         <% end %>
                     </td>
-
+                    
                     <td> 
-                        <%= button_to edit_seller_path(seller), method: :get, class: 'btn btn-warning' do %>
-                        <i class="fa fa-edit"></i>
+                        <%= link_to edit_administrador_user_path (user), class: 'btn btn-primary' do %>
+                            <i class="fa fa-edit"></i>
                         <% end %>
                     </td>
                   
                     <td> 
-                        <%= button_to seller_path(seller), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este usuário?' }, class: 'btn btn-danger' do %>
+                        <%= button_to administrador_user_path(user), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este usuário?' }, class: 'btn btn-danger' do %>
                         <i class="fa fa-trash"></i>
                         <% end %>
                     </td>
@@ -101,8 +90,6 @@
                 <% end %>
               </tbody>
             </table>
-
-
           </div>
         </div>
       </div>
@@ -110,3 +97,4 @@
   </div>
 </div>
 <%= render partial: 'layouts/footer-admin' %>
+

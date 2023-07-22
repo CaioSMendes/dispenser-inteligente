@@ -13,9 +13,11 @@ Rails.application.routes.draw do
   delete 'devices/:id/dissociate', to: 'devices#dissociate', as: 'dissociate_device'
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
   resources :api_manager
+
+  namespace :administrador do
+    resources :users, only: [:index, :destroy, :edit]
+  end
   
-
-
   resources :devices do
     post 'assign_device', on: :member
     post 'save_to_database', on: :collection
@@ -51,6 +53,7 @@ Rails.application.routes.draw do
     post '/send_sms_twilio', to: 'sms_messages#send_sms_twilio'
     # Rotas para o Envio de Whatsapp
     post '/send_whatsapp_message_twilio', to: 'sms_messages#send_whatsapp_message_twilio'
+    get '/logs_message', to: 'sms_messages#logs_message'
 
 
 

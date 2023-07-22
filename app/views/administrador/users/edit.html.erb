@@ -48,61 +48,30 @@
     </div>
     <!-- /Sidebar -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Gerenciamento de Vendedores</h1>
-        <%if current_user.admin? %>
-        <%else%>
-          <%= link_to "Novo vendedor", new_seller_path, class: "btn btn-success" %>
-        <%end%>
+        <h1 class="mt-4">Editando Usuário</h1>
         <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-8">
-
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Status</th>
-                  <th>Nome</th>
-                  <th>Cartão RFID</th>
-                  <th>Cargo</th>
-                  <th>Doses</th>
-                  <th>Email</th>
-                  <th>Ver</th>
-                  <th>Editar</th>
-                  <th>Excluir</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @sellers.each do |seller| %>
-                  <tr>
-                    <td><%= seller.status %></td> 
-                    <td><%= seller.nome %></td>
-                    <td><%= seller.cardRFID %></td>
-                    <td><button type="button" class="btn btn-info"><%= seller.cargo %></button></td>
-                    <td><%= seller.contador %></td>
-                    <td><%= seller.email %></td>
-                    <td> 
-                        <%= button_to seller_path(seller), method: :get, class: 'btn btn-primary' do %>
-                        <i class="fa f fa-search"></i>
-                        <% end %>
-                    </td>
-
-                    <td> 
-                        <%= button_to edit_seller_path(seller), method: :get, class: 'btn btn-warning' do %>
-                        <i class="fa fa-edit"></i>
-                        <% end %>
-                    </td>
-                  
-                    <td> 
-                        <%= button_to seller_path(seller), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este usuário?' }, class: 'btn btn-danger' do %>
-                        <i class="fa fa-trash"></i>
-                        <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-
-
+            <%= form_for @user, url: administrador_users_path(@user), method: :patch do |f| %>
+                <div class="field">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                </div>
+            
+                <div class="field">
+                <%= f.label :name %><br />
+                <%= f.text_field :name, autocomplete: "name" %>
+                </div>
+            
+                <div class="field">
+                <%= f.label :phone %><br />
+                <%= f.text_field :phone, autocomplete: "phone" %>
+                </div>
+                </br>
+                <div class="actions">
+                <%= f.submit 'Salvar', class: 'btn btn-primary' %>
+                </div>
+            <% end %>
           </div>
         </div>
       </div>

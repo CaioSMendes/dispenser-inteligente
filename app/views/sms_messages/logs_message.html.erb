@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -37,7 +38,7 @@
                 <ul class="list-group">
                     <li class="list-group-item active">Dashboard</li>
                     <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
-                    <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path	 %></li>
+                    <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
                     <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
                     <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
                     <li class="list-group-item"><%= link_to 'Status dos Dispositivos', status_path %></li>
@@ -47,46 +48,36 @@
       </div>
       <!-- /Sidebar -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Meus Dispositivos</h1>
-
-
+        <h1 class="mt-4">Histórico de Alertas</h1>
         <div class="container">
-            <div class="row">
-              <% @devices.each do |device| %>
-                <div class="card mb-3" style="max-width: 570px;">
-                  <div class="row g-0">
-                    <div class="col-md-4">
-                      <%= image_tag "dispenser.jpg", alt: "Imagem do Dispenser", class: "img-fluid rounded-start" %>
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                          <h5 class="card-title"><b><%= device["device"] %></b></h5>
-                          <p>Nome Device:  </p>
-                          <% if device["status"] == "online" %>
-                              <p>Status: Online <span class="status-dot status-online"></span></p>
-                          <% else %>
-                              <p>Status: Offline <span class="status-dot status-offline"></span></p>
-                          <% end %>                          
-                          <p>IP Device: <%= device["ipadrrs"] %></p>
-                          <p>Quantidade de dose: <%= device["cont"] %></p>
-                          <p>Padlock:
-                            <% if device["padlock"] == "unlock" %>
-                              <button class="fa fa-unlock btn btn-success" type="button"></button>
-                            <% else %>
-                              <button class="fa fa-lock btn btn-danger" type="button"></button>
-                            <% end %>
-                          </p>                      
-                          <p>Atendentes:</p> 
-                          <p class="card-text"><small class="text-muted">Online última vez <%= device["last_seen"].strftime('%d/%m/%Y') %> </small></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <%end%>
-            </div>
-          </div>
 
+            <div class="d-flex justify-content-center">
+                <table class="table table-striped text-center table-sm">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Body</th>
+                        <th scope="col">Sent At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @sms_logs.each_with_index do |sms_log, index| %>
+                        <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td class="text-center"><%= sms_log.from_number %></td>
+                            <td class="text-center"><%= sms_log.to_number %></td>
+                            <td class="text-center"><%= sms_log.body %></td>
+                            <td class="text-center"><%= sms_log.sent_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
         
+
+        </div>
       </div>      
     </div>
 </div>
