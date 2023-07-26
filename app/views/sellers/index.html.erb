@@ -35,14 +35,15 @@
     <div class="col-lg-3">
           <div class="sidebar bg-dark">
               <ul class="list-group">
-                  <li class="list-group-item active">Dashboard</li>
-                  <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
-                  <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
-                  <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
-                  <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
-                  <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
-                  <li class="list-group-item"><%= link_to 'Status dos Dispositivos', status_path %></li>
-                  <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+              <li class="list-group-item active">Dashboard</li>
+              <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+              <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
+              <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
+              <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
+              <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+              <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
+              <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+              <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
               </ul>
           </div>
     </div>
@@ -66,6 +67,7 @@
                   <th>Cargo</th>
                   <th>Doses</th>
                   <th>Email</th>
+                  <th>Atrelar Vendedores</th>
                   <th>Ver</th>
                   <th>Editar</th>
                   <th>Excluir</th>
@@ -80,6 +82,7 @@
                     <td><button type="button" class="btn btn-info"><%= seller.cargo %></button></td>
                     <td><%= seller.contador %></td>
                     <td><%= seller.email %></td>
+                    <td><%= link_to "Atrelar Devices", seller_attach_devices_path(seller) %></td>
                     <td> 
                         <%= button_to seller_path(seller), method: :get, class: 'btn btn-primary' do %>
                         <i class="fa f fa-search"></i>
@@ -110,3 +113,6 @@
   </div>
 </div>
 <%= render partial: 'layouts/footer-admin' %>
+
+
+

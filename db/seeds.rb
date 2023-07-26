@@ -86,3 +86,4 @@ Seller.create(
   email: "Igor@Igor.com"
 )
 
+DosePrice.create(price: 2.50) # Defina o valor inicial da dose aqui

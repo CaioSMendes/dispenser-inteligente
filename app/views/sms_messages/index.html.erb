@@ -36,13 +36,15 @@
       <div class="col-lg-3">
             <div class="sidebar bg-dark">
                 <ul class="list-group">
-                    <li class="list-group-item active">Dashboard</li>
-                    <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
-                    <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
-                    <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
-                    <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
-                    <li class="list-group-item"><%= link_to 'Status dos Dispositivos', status_path %></li>
-                    <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+                <li class="list-group-item active">Dashboard</li>
+                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
+                <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+                <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
                 </ul>
             </div>
       </div>

@@ -12,6 +12,8 @@ gem 'font-awesome-rails'
 gem 'will_paginate'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
+gem "chartkick"
+
 
 
 

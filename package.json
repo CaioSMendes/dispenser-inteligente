@@ -1,7 +1,11 @@
 {
-    "name": "my-package",
-    "scripts": {
-      "build": "babel src -d lib",
-      "test": "jest"
-    }
+  "name": "my-package",
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "jest"
+  },
+  "dependencies": {
+    "chart.js": "^4.3.0",
+    "chartkick": "^5.0.1"
   }
+}

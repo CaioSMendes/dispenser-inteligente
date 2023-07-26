@@ -1,5 +1,14 @@
+<h1>Editar Valor da Dose</h1>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <%= form_with(model: @dose_price, url: dose_price_path(@dose_price), method: :patch) do |form| %>
+    <%= form.label :price, 'Valor da Dose:' %>
+    <%= form.text_field :price %>
+    <%= form.submit 'Salvar' %>
+  <% end %>
+
+  <%= link_to 'Cancelar', dose_prices_path %>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -50,45 +59,13 @@
       </div>
       <!-- /Sidebar -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Gestão de Dispositivos</h1>
-    
-            <div class="container mt-5">
-                <div class="row justify-content-center">
-                    <div class="col-8">
-                    <h1 class="text-center">Dispositivos em Uso</h1>
-                    <table class="table table-bordered table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>Dispositivo</th>
-                            <th>Usuário</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% @devices.each do |device| %>
-                            <% if device.user.present? %>
-                            <tr>
-                                <td><%= device.device %></td>
-                                <td><%= device.user.name %></td>
-                                <td>
-                                <%= link_to 'Ver', device_path(device), class: 'btn btn-primary btn-sm' %>
-                                </td>
-                                <td>
-                                <%= button_to 'Desassociar', dissociate_device_path(device), method: :delete, data: { confirm: 'Tem certeza que deseja desassociar este dispositivo?' }, class: 'btn btn-danger btn-sm' %>
-                                </td>
-                            </tr>
-                            <% end %>
-                        <% end %>
-                        <div class="text-center">
-                        </div> 
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-            </div>
+        <h1 class="mt-4">Histórico de Alertas</h1>
+        <div class="container">
+        
 
         </div>
+      </div>      
     </div>
 </div>
 <%= render partial: 'layouts/footer-admin' %>
+

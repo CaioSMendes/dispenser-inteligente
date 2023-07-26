@@ -2,6 +2,22 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!-- Script para atualizar o total automaticamente -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var precoInput = document.getElementById("preco_input");
+      precoInput.addEventListener("input", function() {
+        var total_price = document.getElementById("total_price");
+        var preco = parseFloat(precoInput.value);
+        var dosePrice = <%= DosePrice.first.price || 0 %>; // Valor padrão para o preço da dose
+        var total = <%= @total_price || 0 %>; // Valor padrão para o total se ainda não estiver definido
+        if (!isNaN(preco)) {
+          total = <%= @total_price || 0 %> * preco * dosePrice;
+        }
+        total_price.innerText = total.toFixed(2); // Exibir com duas casas decimais
+      });
+    });
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
 
   <!-- Navbar -->
@@ -43,6 +59,7 @@
             <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
             <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
             <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
+            <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
           </ul>
         </div>
       </div>
@@ -93,8 +110,8 @@
             <!-- Card 1 -->
             <div class="card mb-4">
               <div class="card-body">
-                <h5 class="card-title">Last Year Expenses</h5>
-                <p class="card-text">$1896</p>
+                <h5 class="card-title">Dispositivos</h5>
+                <p class="card-text"><%= @total_ids %></p>
               </div>
             </div>
           </div>
@@ -103,9 +120,8 @@
             <!-- Card 2 -->
             <div class="card mb-4">
               <div class="card-body">
-                <h5 class="card-title">Clients</h5>
-                <p class="card-text">Total Clients Profit</p>
-                <p class="card-text">$568</p>
+                <h5 class="card-title">Usuários</h5>
+                <p class="card-text"><%= @users_total %></p>
               </div>
             </div>
           </div>
@@ -114,9 +130,8 @@
             <!-- Card 3 -->
             <div class="card mb-4">
               <div class="card-body">
-                <h5 class="card-title">Followers</h5>
-                <p class="card-text">People Interested</p>
-                <p class="card-text">46</p>
+                <h5 class="card-title">Total Vendidos</h5>
+                <p class="card-text"> R$ <%= @total_price %></p>
               </div>
             </div>
           </div>
@@ -128,7 +143,6 @@
 
   <!-- Footer -->
   <footer class="bg-light text-center text-lg-start">
-   >
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2023 Seu Painel Administrativo
     </div>

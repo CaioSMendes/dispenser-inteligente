@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   get '/user_management', to: 'user_management#index', as: 'user_management'
   resources :sellers do
-      post 'associate_device', on: :collection
+    get 'attach_devices'
+    post 'save_attached_devices'
   end
+
 
   get 'home/index'
   get 'esp8266/index'
@@ -14,8 +16,10 @@ Rails.application.routes.draw do
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
   resources :api_manager
 
+  resources :dose_prices
+
   namespace :administrador do
-    resources :users, only: [:index, :destroy, :edit]
+    resources :users, only: [:index, :edit, :update, :destroy]
   end
   
   resources :devices do

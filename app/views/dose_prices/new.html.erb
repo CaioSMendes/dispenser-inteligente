@@ -1,7 +1,4 @@
-
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -38,31 +35,29 @@
       <div class="col-lg-3">
             <div class="sidebar bg-dark">
                 <ul class="list-group">
-                <li class="list-group-item active">Dashboard</li>
-                <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
-                <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
-                <li class="list-group-item"><%= link_to 'Gestão de Vendedores', sellers_path %></li>
-                <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
-                <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
-                <li class="list-group-item"><%= link_to 'Gestão da API', sms_messages_path %></li>
-                <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
-                <li class="list-group-item"><%= link_to 'Configuração de Preço', dose_prices_path %></li>
+                    <li class="list-group-item active">Dashboard</li>
+                    <li class="list-group-item"><%= link_to 'Home', admin_index_path %></li>
+                    <li class="list-group-item"><%= link_to 'Gestão de Usuários', administrador_users_path %></li>
+                    <li class="list-group-item"><%= link_to 'Vizualização de Dispositivos', status_path %></li>
+                    <li class="list-group-item"><%= link_to 'Gestão de Dispositivos', devices_path %></li>
+                    <li class="list-group-item"><%= link_to 'Status dos Dispositivos', status_path %></li>
+                    <li class="list-group-item"><%= link_to 'Configuração de Mensagens', sms_messages_path %></li>
                 </ul>
             </div>
       </div>
       <!-- /Sidebar -->
       <div class="col-lg-9">
-        <h1 class="mt-4">Configurações de Alerta</h1>
+        <h1 class="mt-4">Preço da dose</h1>
         <div class="container">
         
-          <h2>Editar Mensagem Padrão</h2>
-            <%= form_for @sms_message do |f| %>
-              <%= f.label :smsbody, "Mensagem:" %>
-              <%= f.text_area :smsbody, class: "form-control" %>
-              </br>
-              <%= f.submit "Atualizar", class: "btn btn-primary" %>
-              <%= link_to "Voltar", sms_messages_path, class: "btn btn-success" %>
-          <% end %>
+     
+
+        <%= form_with(model: @doses_price, url: dose_prices_path) do |form| %>
+            <%= form.label :price, 'Valor da Dose:' %>
+            <%= form.text_field :price %>
+            <%= form.submit 'Salvar', class: "btn btn-success" %>
+        <% end %>
+
 
         </div>
       </div>      

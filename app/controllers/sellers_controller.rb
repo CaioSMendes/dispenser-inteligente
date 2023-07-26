@@ -1,10 +1,34 @@
 class SellersController < ApplicationController
-  before_action :set_seller, only: %i[ show edit update destroy ]
+  before_action :set_seller, only: %i[show edit update destroy attach_devices save_attached_devices]
 
   # GET /sellers or /sellers.json
   def index
     @sellers = Seller.all
-    @devices = Device.includes(:seller)
+    @devices = Device.all
+    #@devices = Device.includes(:seller)
+  end
+
+  def attach_devices
+    @seller = Seller.find(params[:id])
+    @devices = Device.all
+  end
+
+  def save_attached_devices
+    @seller = Seller.find(params[:id])
+    selected_device_ids = params[:seller][:device_ids]
+
+    # Limpa as associações atuais com os devices
+    @seller.devices.clear
+
+    # Associa os dispositivos selecionados ao seller
+    if selected_device_ids.present?
+      selected_device_ids.each do |device_id|
+        device = Device.find(device_id)
+        @seller.devices << device
+      end
+    end
+
+    redirect_to sellers_path, notice: 'Devices atrelados com sucesso!'
   end
 
   # GET /sellers/1 or /sellers/1.json
@@ -70,6 +94,14 @@ class SellersController < ApplicationController
   end
 
   private
+
+    # Define o filtro para carregar o @seller com base no ID fornecido na URL
+    def set_seller
+      @seller = Seller.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to sellers_path, alert: 'Seller não encontrado.'
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_seller
       @seller = Seller.find(params[:id])

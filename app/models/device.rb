@@ -1,8 +1,8 @@
 class Device < ApplicationRecord
     #validates :device, uniqueness: true
     belongs_to :user, optional: true
-    has_many :device_sellers
-    has_many :sellers, through: :device_sellers
+    has_and_belongs_to_many :sellers
+
 
     #def device_name
         # Lógica para obter o nome do dispositivo
