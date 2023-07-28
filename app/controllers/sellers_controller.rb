@@ -102,13 +102,9 @@ class SellersController < ApplicationController
       redirect_to sellers_path, alert: 'Seller não encontrado.'
     end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_seller
-      @seller = Seller.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def seller_params
-      params.require(:seller).permit(:status, :nome, :cardRFID, :cargo, :contador, :email)
+      params.require(:seller).permit(:id, :status, :nome, :cardRFID, :cargo, :contador, :email)
     end
 end

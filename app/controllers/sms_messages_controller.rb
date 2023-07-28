@@ -35,7 +35,7 @@ class SmsMessagesController < ApplicationController
 
     respond_to do |format|
       if @sms_message.save
-        format.html { redirect_to sms_message_url(@sms_message), notice: "Sms message was successfully created." }
+        format.html { redirect_to sms_messages_path(@sms_message), notice: "Sms message was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -111,8 +111,9 @@ class SmsMessagesController < ApplicationController
     def send_sms_to_phone(client, phone_number)
       from = '15416128239' # Número de telefone fornecido pela Twilio
       puts "Conteúdo de @last_sms_message: #{@last_sms_message}"
+      body = @last_sms_message = SmsMessage.last
       #body = @last_sms_message.smsbody # Corpo da mensagem SMS
-      body = "TESTE" # Corpo da mensagem SMS
+      #body = "TESTE" # Corpo da mensagem SMS
 
       
       #to = '5561992488131' # Número de telefone do destinatário Luis RFID

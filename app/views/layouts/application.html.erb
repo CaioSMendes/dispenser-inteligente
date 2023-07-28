@@ -1,12 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DispenserInteligente</title>
+    <!-- Bootstrap -->
+    <link href="app/assets/stylesheets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="app/assets/stylesheets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="app/assets/stylesheets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="app/assets/stylesheets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="app/assets/stylesheets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="app/assets/stylesheets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="app/assets/stylesheets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="app/assets/stylesheets/build/css/custom.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="app/assets/stylesheets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="app/assets/stylesheets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="app/assets/stylesheets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="app/assets/stylesheets/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="app/assets/stylesheets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="app/assets/stylesheets/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="app/assets/stylesheets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="app/assets/stylesheets/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="app/assets/stylesheets/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="app/assets/stylesheets/vendors/Flot/jquery.flot.js"></script>
+    <script src="app/assets/stylesheets/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="app/assets/stylesheets/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="app/assets/stylesheets/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="app/assets/stylesheets/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="app/assets/stylesheets/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="app/assets/stylesheets/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="app/assets/stylesheets/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="app/assets/stylesheets/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="app/assets/stylesheets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="app/assets/stylesheets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="app/assets/stylesheets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="app/assets/stylesheets/vendors/moment/min/moment.min.js"></script>
+    <script src="app/assets/stylesheets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="app/assets/stylesheets/build/js/custom.min.js"></script>
+    <title>Dispenser Inteligente</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'gentelella', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
   </head>
 
