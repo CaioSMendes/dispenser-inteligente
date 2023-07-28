@@ -8,6 +8,19 @@ class SellersController < ApplicationController
     #@devices = Device.includes(:seller)
   end
 
+  def associate_device_seller
+    @device = Device.find(params[:id])
+    seller_id = params[:device][:seller_id]
+    @seller = Seller.find(seller_id)
+
+    if @device.update(seller_id: seller_id)
+      redirect_to @device, notice: "Device associated with seller successfully!"
+    else
+      render :show, alert: "Error associating the device with the seller."
+    end
+  end
+
+
   def attach_devices
     @seller = Seller.find(params[:id])
     @devices = Device.all

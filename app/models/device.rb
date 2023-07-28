@@ -1,7 +1,8 @@
 class Device < ApplicationRecord
     #validates :device, uniqueness: true
     belongs_to :user, optional: true
-    has_and_belongs_to_many :sellers
+    belongs_to :seller, optional: true
+
 
 
     #def device_name

@@ -63,6 +63,34 @@ class DevicesController < ApplicationController
       @devices = Device.includes(:user).where.not(user_id: nil)
     end
 
+    def in_use_seller
+      @devices = Device.all
+      @sellers = Seller.all
+      #@device = Device.find(params[:id])
+    end
+
+    def associate_seller
+      @device = Device.find(params[:id])
+      seller_id = params[:device][:seller_id]
+      @seller = Seller.find(seller_id)
+  
+      if @device.update(seller_id: seller_id)
+        render :show_seller, notice: "Dispositivo associado com sucesso!"
+      else
+        render :show, alert: "Erro ao associar o dispositivo ao vendedor."
+      end
+    end
+  
+    def dissociate_seller
+      @device = Device.find(params[:id])
+  
+      if @device.update(seller_id: nil)
+        redirect_to @device, notice: "Dispositivo desassociado com sucesso!"
+      else
+        render :show, alert: "Erro ao desassociar o dispositivo do vendedor."
+      end
+    end
+
     def show
         @device = Device.find(params[:id])
         @devices = @user.devices if @user.present? && @user.devices.present?

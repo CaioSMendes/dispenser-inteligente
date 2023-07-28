@@ -83,7 +83,7 @@
               <h3>Painel Usuário</h3>
               <ul class="nav side-menu">
                   <li>
-                    <%= link_to admin_index_path do %>
+                    <%= link_to user_index_path do %>
                       <i class="glyphicon glyphicon-home"></i> Home
                       <span class="fa fa-chevron-down"></span>
                     <% end %>
@@ -169,6 +169,7 @@
             <div class="row x_title">
               <div class="col-md-6">
                 <h3>Gerenciamento de Vendedores</h3>
+                <%= link_to "Atrelar Dispositivo", devices_in_use_seller_path, class: 'btn btn-success' %>
               </div>
               <% if current_user.admin? %>
               <% else %>
@@ -189,7 +190,6 @@
                           <th>Cargo</th>
                           <th>Doses</th>
                           <th>Email</th>
-                          <th>Atrelar Vendedores</th>
                           <th>Ver</th>
                           <th>Editar</th>
                           <th>Excluir</th>
@@ -204,7 +204,6 @@
                             <td><button type="button" class="btn btn-info"><%= seller.cargo %></button></td>
                             <td><%= seller.contador %></td>
                             <td><%= seller.email %></td>
-                            <td><%= link_to "Atrelar Dispositivo", seller_attach_devices_path(seller_id: seller.id), class: 'btn btn-success' %></td>
                             <td>
                               <%= button_to seller_path(seller), method: :get, class: 'btn btn-primary' do %>
                                 <i class="glyphicon glyphicon-search"></i>

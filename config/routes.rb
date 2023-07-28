@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   get '/user_management', to: 'user_management#index', as: 'user_management'
   resources :sellers do
+    member do
+      post 'associate_seller', to: 'devices#associate_seller'
+      delete 'dissociate_seller', to: 'devices#dissociate_seller'
+    end
     get 'attach_devices'
     post 'save_attached_devices'
   end
-
 
   get 'home/index'
   get 'esp8266/index'
@@ -14,6 +17,8 @@ Rails.application.routes.draw do
   get 'associar_dispositivo_usuario', to: 'devices#associar_dispositivo_usuario'
   delete 'devices/:id/dissociate', to: 'devices#dissociate', as: 'dissociate_device'
   get '/devices/in_use', to: 'devices#in_use', as: 'devices_in_use'
+  get '/devices/in_use_seller', to: 'devices#in_use_seller', as: 'devices_in_use_seller'
+
   resources :api_manager
 
   resources :dose_prices
@@ -23,6 +28,7 @@ Rails.application.routes.draw do
   end
   
   resources :devices do
+    post 'associate_device_seller'
     post 'assign_device', on: :member
     post 'save_to_database', on: :collection
     post 'save_data', on: :collection
