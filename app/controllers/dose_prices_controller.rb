@@ -43,6 +43,10 @@ class DosePricesController < ApplicationController
     end
     
     private
+
+    def seller_params
+        params.require(:seller).permit(:status, :nome, :cardRFID, :cargo, :contador, :email)
+      end
     
     def dose_price_params
         params.require(:dose_price).permit(:price)
